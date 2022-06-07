@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   vector.cpp                                         :+:    :+:            */
+/*   allocator.hpp                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/26 11:49:16 by akramp        #+#    #+#                 */
-/*   Updated: 2022/06/07 17:08:41 by akramp        ########   odam.nl         */
+/*   Created: 2022/06/07 14:50:39 by akramp        #+#    #+#                 */
+/*   Updated: 2022/06/07 14:55:03 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.hpp"
+#ifndef ALLOCATOR_HPP
+# define ALLOCATOR_HPP
 #include <memory>
 
-// vector (size_type n, const value_type& val = value_type(),
-// 	const allocator_type& alloc = allocator_type())
-// {
+namespace ft
+{
+	template <class T> class allocator;
+	class My_Alloc : public std::iterator<std::input_iterator_tag, pOpReference>
+	{
 
-// }
-
-// vector (InputIterator first, InputIterator last,
-// 	const allocator_type& alloc = allocator_type())
-// {
-
-// }
+	}
+}
 
 
-
-// std::iterator	ft::vector::begin()
-// {
-
-// }
+#endif
