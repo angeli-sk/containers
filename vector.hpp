@@ -6,13 +6,14 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 11:59:32 by akramp        #+#    #+#                 */
-/*   Updated: 2022/06/09 19:18:23 by akramp        ########   odam.nl         */
+/*   Updated: 2022/06/23 18:35:44 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <memory> //alloc
+#include <iostream>
 
 namespace ft
 {
@@ -25,11 +26,11 @@ namespace ft
 			typedef typename alloc_traits::size_type       	size_type;
 
 		private:
-			// __storage_pointer                                      _begin;
-			// size_type                                              _size;
-			T			_length;
+			size_type	_size;
+			size_type	_capacity;
+
 			Allocator 	_alloc_type;
-			Allocator	*_alloc;
+			Allocator	*_data;
 
 		protected:
 			typedef T												value_type;
@@ -43,8 +44,29 @@ namespace ft
 			typedef std::reverse_iterator<iterator>          		reverse_iterator;
 			typedef std::reverse_iterator<const_iterator>    		const_reverse_iterator;
 
+		private:
+			pointer										_begin;
+			pointer										_end;
+
+
 		public:
-			explicit vector (const allocator_type& alloc = allocator_type()) : _alloc_type(alloc) {}
+
+			// template <class _Tp, class _Allocator>
+			// void vector<_Tp, _Allocator>::__vallocate(size_type __n)
+			// {
+			// 	if (__n > max_size())
+			// 		this->__throw_length_error();
+			// 	this->__begin_ = this->__end_ = __alloc_traits::allocate(this->__alloc(), __n);
+			// 	this->__end_cap() = this->__begin_ + __n;
+			// 	__annotate_new(0);
+			// }
+
+			/*---------------------------------------------------------------*/
+			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), \
+				_capacity(0), _alloc_type(alloc), _data(NULL)
+			{
+				std::cout << "constructor uwu!" << std::endl;
+			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type());
@@ -65,11 +87,17 @@ namespace ft
 				this->_length = copy._length;
 				return *this;
 			}
+
 			virtual ~vector()
 			{
-				if (_alloc)
-					delete _alloc;
 			};
+
+
+			template <class InputIterator>
+			void assign (InputIterator first, InputIterator last);
+
+			void assign (size_type n, const value_type& val);
+
 			// static_assert<is_same<typename allocator_type::value_type,value_type>::value>();
 			//begin();
 	};
