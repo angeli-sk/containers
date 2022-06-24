@@ -6,7 +6,7 @@
 #    By: akramp <akramp@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/01/20 15:59:53 by akramp        #+#    #+#                  #
-#    Updated: 2022/01/27 13:40:27 by akramp        ########   odam.nl          #
+#    Updated: 2022/06/24 18:02:50 by akramp        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FLAGS = -Wall -Werror -Wextra -std=c++98
 
 #✧･ﾟ: *✧･ﾟ:*  *:･ﾟ✧*:･ﾟ✧✧･ *✧･ﾟ:* SOURCES ✧*:･ﾟ✧: *✧･ﾟ:*  *:･ﾟ✧*:･ﾟ✧✧･ﾟ: *✧･ﾟ:#
 
-SRC = 	containers.cpp vector.cpp
+SRC = 	containers.cpp
 
 #✧･ﾟ: *✧･ﾟ:*  *:･ﾟ✧*:･ﾟ✧✧･ *✧･ﾟ:* COLORS ✧*:･ﾟ✧: *✧･ﾟ:* ✧ *:･ﾟ✧*:･ﾟ✧✧･ﾟ: *✧･ﾟ:#
 

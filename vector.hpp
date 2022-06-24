@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 11:59:32 by akramp        #+#    #+#                 */
-/*   Updated: 2022/06/23 18:35:44 by akramp        ########   odam.nl         */
+/*   Updated: 2022/06/24 19:03:51 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ namespace ft
 			pointer										_begin;
 			pointer										_end;
 
+			// void	create_update_array()
+			// {
+
+			// }
+
 
 		public:
 
@@ -69,10 +74,13 @@ namespace ft
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
-				const allocator_type& alloc = allocator_type());
-			// {
-					//asign
-			// }
+				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(4), _alloc_type(alloc), _data(val) //change data to null
+			{
+					// pushback asign
+					//figure out the growth rate
+					// if (2^size > _capacity)
+					// 	_capacity = 2^size
+			}
 
 			template <class InputIterator>
 				vector (InputIterator first, InputIterator last,
@@ -100,6 +108,7 @@ namespace ft
 
 			// static_assert<is_same<typename allocator_type::value_type,value_type>::value>();
 			//begin();
+
 	};
 }
 

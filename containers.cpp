@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:31 by akramp        #+#    #+#                 */
-/*   Updated: 2022/06/23 17:57:59 by akramp        ########   odam.nl         */
+/*   Updated: 2022/06/24 18:05:58 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int	main(void)
 {
 	//VECTOR
 	ft::vector <int> my_empty_vec;
+	std::vector <std::string> lol(5, "shrek");
 	iterator_tests();
 	capacity_tests();
 	element_access_tests();
@@ -162,4 +163,8 @@ int	main(void)
 	for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
 		std::cout << ' ' << *it;
 		std::cout << '\n';
+	for (std::vector<std::string>::iterator it = lol.begin(); it != lol.end(); ++it)
+	{
+		std::cout << *it << std::endl;
+	}
 }
