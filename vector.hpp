@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 11:59:32 by akramp        #+#    #+#                 */
-/*   Updated: 2022/06/24 19:03:51 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/05 17:46:16 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_HPP
 #include <memory> //alloc
 #include <iostream>
+#include <cmath>
 
 namespace ft
 {
@@ -30,7 +31,7 @@ namespace ft
 			size_type	_capacity;
 
 			Allocator 	_alloc_type;
-			Allocator	*_data;
+
 
 		protected:
 			typedef T												value_type;
@@ -68,26 +69,36 @@ namespace ft
 
 			/*---------------------------------------------------------------*/
 			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), \
-				_capacity(0), _alloc_type(alloc), _data(NULL)
+				_capacity(0), _alloc_type(alloc)
 			{
 				std::cout << "constructor uwu!" << std::endl;
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
-				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(4), _alloc_type(alloc), _data(val) //change data to null
+				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(0), _alloc_type(alloc) //change data to null
 			{
 					// pushback asign
 					//figure out the growth rate
-					// if (2^size > _capacity)
-					// 	_capacity = 2^size
+					(void)val;
+					std::cout << "constructor owo!" << std::endl;
+					if (_size > _capacity)
+					{
+						for (int i = 0; _capacity < _size; i++)
+						{
+							_capacity = pow(2, i);
+							std::cout << i << " & " << _capacity << std::endl;
+						}
+						std::cout << "cap = " << _capacity << std::endl;
+					}
+
 			}
 
-			template <class InputIterator>
-				vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type());
-			// {
+			// template <class InputIterator>
+			// 	vector (InputIterator first, InputIterator last,
+			// 		const allocator_type& alloc = allocator_type());
+			// // {
 
-			// }
+			// // }
 
 			vector(const vector  & copy) { *this = copy; }
 			vector & operator = (vector const & copy)

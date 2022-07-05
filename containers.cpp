@@ -6,11 +6,11 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:31 by akramp        #+#    #+#                 */
-/*   Updated: 2022/06/24 18:05:58 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/05 17:43:36 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.hpp"
+#include "./vector.hpp"
 #include <vector>
 #include <iostream>
 
@@ -150,8 +150,11 @@ void	modifiers_tests()
 int	main(void)
 {
 	//VECTOR
+	std::vector <int> empty_vec;
 	ft::vector <int> my_empty_vec;
-	std::vector <std::string> lol(5, "shrek");
+	std::vector <int> num_vec(5, 0);
+	ft::vector <int> my_num_vec(5, 0);
+	std::vector <std::string> lol(5, "uwu");
 	iterator_tests();
 	capacity_tests();
 	element_access_tests();
