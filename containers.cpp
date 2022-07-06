@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:31 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/05 17:43:36 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/06 20:22:29 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	modifiers_tests()
 {
 	std::vector<int> empty_vec;
 	std::vector<std::string> letters;
+	ft::vector <std::string> my_vec;
 	std::vector<std::string>::iterator it;
 	std::vector<std::string> swapity;
 	std::allocator<int> alloc;
@@ -108,9 +109,18 @@ void	modifiers_tests()
 	std::string s = "def";
 	letters.push_back(std::move(s));
 
+	my_vec.push_back("lol");
+	my_vec.push_back("xxx");
+	my_vec.push_back("azula");
+
 	std::cout << "push back: ";
 	for (unsigned i=0; i<letters.size(); i++)
 		std::cout << ' ' << letters.at(i);
+	std::cout << '\n';
+	std::cout << "[" << std::endl;
+	for (unsigned i=0; i<3; i++)
+		std::cout << my_vec[i];
+	std::cout << "\n]" << std::endl;
 	std::cout << '\n';
 
 	std::cout << "pop back: ";
@@ -152,9 +162,15 @@ int	main(void)
 	//VECTOR
 	std::vector <int> empty_vec;
 	ft::vector <int> my_empty_vec;
-	std::vector <int> num_vec(5, 0);
-	ft::vector <int> my_num_vec(5, 0);
+	std::vector <int> num_vec(5, 7);
+	ft::vector <int> my_num_vec(5, 7);
 	std::vector <std::string> lol(5, "uwu");
+
+	for (size_t i = 0; i < 5; i++)
+	{
+		std::cout << my_num_vec[i] << std::endl;
+	}
+
 	iterator_tests();
 	capacity_tests();
 	element_access_tests();

@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 11:59:32 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/05 17:46:16 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/06 20:26:22 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ namespace ft
 
 		private:
 			size_type	_size;
+			size_type	_old_size;
 			size_type	_capacity;
-
+			size_type	_old_cap;
 			Allocator 	_alloc_type;
+			T			*_array;
 
 
 		protected:
@@ -48,11 +50,65 @@ namespace ft
 		private:
 			pointer										_begin;
 			pointer										_end;
+			value_type									_val;
 
-			// void	create_update_array()
-			// {
+			void	capacity_updater()
+			{
+				if (_size > _capacity)
+				{
+					_old_cap = _capacity;
+					for (size_type i = 0; _capacity < _size; i++)
+						_capacity = pow(2, i);
+				}
+			}
 
-			// }
+			T	*copy_array(T *array, size_type size_new_array)
+			{
+				T *temp = new T[size_new_array];
+
+				for (size_type i = 0; i < size_new_array; i++)
+					temp[i] = array[i];
+				// if (size_new_array > _old_cap)
+				// {
+				// 	for (size_type i = _old_cap; i < size_new_array; i++)
+				// 		temp[i] = (value_type) 0;
+				// 		std::cout << "djjdkdj" << std::endl;
+				// }
+				return temp;
+			}
+
+			void	new_array()
+			{
+				_array = new T[_size];
+			}
+
+			void	array_updater()
+			{
+					T *temp = NULL;
+					if (_old_size != 0)
+					{
+						temp = copy_array(_array, _size);
+						delete [] _array;
+						_array = temp;
+					}
+					else
+						new_array();
+
+			}
+
+			void	array_filler(size_type start)
+			{
+
+				for (size_type i = start; i < _size; i++)
+					_array[i] = _val;
+					std::cout << "owo!" << std::endl;
+			}
+
+			void	array_deleter()
+			{
+				delete [] _array;
+			}
+
 
 
 		public:
@@ -69,27 +125,30 @@ namespace ft
 
 			/*---------------------------------------------------------------*/
 			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), \
-				_capacity(0), _alloc_type(alloc)
+				_capacity(0), _old_cap(0), _alloc_type(alloc)
 			{
 				std::cout << "constructor uwu!" << std::endl;
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
-				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(0), _alloc_type(alloc) //change data to null
+				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(0), \
+				_old_cap(0), _alloc_type(alloc) //change data to null
 			{
 					// pushback asign
-					//figure out the growth rate
-					(void)val;
+					_val = val;
 					std::cout << "constructor owo!" << std::endl;
-					if (_size > _capacity)
-					{
-						for (int i = 0; _capacity < _size; i++)
-						{
-							_capacity = pow(2, i);
-							std::cout << i << " & " << _capacity << std::endl;
-						}
-						std::cout << "cap = " << _capacity << std::endl;
-					}
+
+					capacity_updater();
+					if (_array == NULL)
+						new_array();
+					// else
+					// 	array_updater();
+					array_filler(0);
+					// for (size_type i = 0; i < _capacity; i++)
+					// {
+					// 	std::cout << "arr = " << _array[i] << std::endl;
+					// }
+					_old_size = _size;
 
 			}
 
@@ -116,6 +175,28 @@ namespace ft
 			void assign (InputIterator first, InputIterator last);
 
 			void assign (size_type n, const value_type& val);
+
+			reference operator[] (size_type n)
+			{
+				return _array[n];
+			}
+
+			const_reference operator[] (size_type n) const
+			{
+				return _array[n];
+			}
+
+			void push_back (const value_type& val)
+			{
+				_old_size = _size;
+				_size++;
+				_val = val;
+				std::cout << val << std::endl;
+				capacity_updater();
+				array_updater();
+				_array[_size-1] = val;
+				// array_filler(0);
+			}
 
 			// static_assert<is_same<typename allocator_type::value_type,value_type>::value>();
 			//begin();
