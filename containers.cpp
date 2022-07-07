@@ -6,13 +6,17 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:31 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/06 20:22:29 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/07 17:54:48 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./vector.hpp"
 #include <vector>
 #include <iostream>
+#define ORANGE "\033[38;5;208m"
+#define YELLOW "\033[38;5;221m"
+#define WHITE	"\033[0m"
+#define RED		"\033[38;5;196m"
 
 void	init_it_tests()
 {
@@ -91,70 +95,138 @@ void	element_access_tests()
 
 void	modifiers_tests()
 {
-	std::vector<int> empty_vec;
-	std::vector<std::string> letters;
+	std::vector<int> vec_int;
+	ft::vector<int> my_vec_int;
+	std::vector<std::string> vec;
 	ft::vector <std::string> my_vec;
+	std::vector<float> vec_float;
+	ft::vector <float> my_vec_float;
 	std::vector<std::string>::iterator it;
-	std::vector<std::string> swapity;
 	std::allocator<int> alloc;
 
-	std::cout << "size empty: " << empty_vec.size() << '\n';
-	empty_vec.assign(3, 8);
-	std::cout << "size assigned: " << empty_vec.size() << '\n';
-	std::cout << "content of assigned: " << empty_vec[0] << " " << empty_vec[1] << " " << empty_vec[2] << " " << "\n";
+	/*** EMPTY TESTS ***/
+	std::cout << ORANGE << "\nEMPTY SIZE TESTS:" << WHITE << std::endl;
+	std::cout << "size empty:	" << vec.size() << '\n';
+	std::cout << "is vec empty?		";
+	if (vec.empty() == true)
+		std::cout << "yes!" << std::endl;
+	else
+		std::cout << "no!" << std::endl;
+	std::cout << "is my_vec empty?	";
+	if (my_vec.empty() == true)
+		std::cout << "yes!" << std::endl;
+	else
+		std::cout << "no!" << std::endl;
+	std::cout << YELLOW << "my size empty:	" << my_vec.size() << WHITE << '\n';
+	std::cout << "size: 		" << vec.size() << '\n';
+	std::cout << YELLOW << "my size:	" << my_vec.size() << WHITE << '\n';
+	std::cout << "size empty:	" << vec_int.size() << '\n';
+	std::cout << YELLOW << "my size empty: 	" << my_vec_int.size() << WHITE << '\n';
+	std::cout << "size:		" << vec_int.size() << '\n';
+	std::cout << YELLOW << "my size: 	" << my_vec_int.size() << WHITE << '\n';
 
-	swapity.push_back("its swappedddd omgg");
-	letters.push_back("abc");
-	letters.push_back("xyz");
-	std::string s = "def";
-	letters.push_back(std::move(s));
-
-	my_vec.push_back("lol");
-	my_vec.push_back("xxx");
+	vec.push_back("abc");
+	vec.push_back("xyz");
+	vec.push_back("azula");
+	my_vec.push_back("abc");
+	my_vec.push_back("xyz");
 	my_vec.push_back("azula");
+	std::string s = "def";
+	vec.push_back(std::move(s));
+	my_vec.push_back(std::move(s));
 
-	std::cout << "push back: ";
-	for (unsigned i=0; i<letters.size(); i++)
-		std::cout << ' ' << letters.at(i);
-	std::cout << '\n';
-	std::cout << "[" << std::endl;
-	for (unsigned i=0; i<3; i++)
+	/*** PUSH_BACK TESTS ***/
+	std::cout << ORANGE << "\nPUSH BACK TESTS:" << WHITE << std::endl;
+	std::cout << "[";
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << vec.at(i);
+	std::cout << ']' << std::endl;
+	std::cout << YELLOW << "[";
+	for (unsigned i=0; i<my_vec.size(); i++)
 		std::cout << my_vec[i];
-	std::cout << "\n]" << std::endl;
+	std::cout << "]" << WHITE << std::endl;
 	std::cout << '\n';
+
+	std::cout << "is vec empty?		";
+	if (vec.empty() == true)
+		std::cout << "yes!" << std::endl;
+	else
+		std::cout << "no!" << std::endl;
+	std::cout << "is my_vec empty?	";
+	if (my_vec.empty() == true)
+		std::cout << "yes!" << std::endl;
+	else
+		std::cout << "no!" << std::endl;
+
+
+	/*** ASSIGN TESTS ***/
+	vec_int.assign(3, 8);
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "content of assigned: " << vec_int[0] << " " << vec_int[1] << " " << vec_int[2] << " " << "\n";
+
+
+	/*** SIZE TESTS ***/
+	std::cout << ORANGE << "\nSIZE TESTS:" << WHITE << std::endl;
+	std::cout << "size:		" << vec.size() << '\n';
+	std::cout << YELLOW << "my size:	" << my_vec.size() << WHITE << '\n';
+	std::cout << "size:		" << vec_int.size() << '\n';
+	std::cout << YELLOW << "my size empty:	" << my_vec_int.size() << WHITE << '\n';
+	std::cout << "max_size int:		" << vec_int.max_size() << '\n';
+	std::cout << YELLOW << "my max_size int:	" << my_vec_int.max_size() << WHITE << '\n';
+	std::cout << "max_size str:		" << vec.max_size() << '\n';
+	std::cout << YELLOW << "my max_size str:	" << my_vec.max_size() << WHITE << '\n';
+	std::cout << "max_size float:		" << vec_float.max_size() << '\n';
+	std::cout << YELLOW << "my max_size float:	" << my_vec_float.max_size() << WHITE << '\n';
+
+	/*** CAPACITY TESTS ***/
+	std::cout << ORANGE << "\nCAPACITY TESTS:" << WHITE << std::endl;
+	std::cout << "cap:		" << vec.capacity() << '\n';
+	std::cout << YELLOW << "my cap:		" << my_vec.capacity() << WHITE << '\n';
+	std::cout << "cap float:	" << vec_float.capacity() << '\n';
+	std::cout << YELLOW << "my cap float:	" << my_vec_float.capacity() << WHITE << '\n';
+	vec.push_back("abc"); //change this to resize later
+	vec.push_back("xyz");
+	vec.push_back("azula");
+	my_vec.push_back("abc");
+	my_vec.push_back("xyz");
+	my_vec.push_back("azula");
+	std::cout << "cap:		" << vec.capacity() << '\n';
+	std::cout << YELLOW << "my cap:		" << my_vec.capacity() << WHITE << '\n';
 
 	std::cout << "pop back: ";
-	letters.pop_back();
-	for (unsigned i=0; i<letters.size(); i++)
-		std::cout << ' ' << letters.at(i);
+	vec.pop_back();
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
 	std::cout << "insert: ";
-	it = letters.begin();
-	letters.insert(it, "lolity");
-	for (unsigned i=0; i<letters.size(); i++)
-		std::cout << ' ' << letters.at(i);
+	it = vec.begin();
+	vec.insert(it, "lolity");
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
 	std::cout << "erase: ";
-	letters.erase(it);
-	for (unsigned i=0; i<letters.size(); i++)
-		std::cout << ' ' << letters.at(i);
+	vec.erase(it);
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
+	std::vector<std::string> swapity;
+	swapity.push_back("omg its swapped!!??\n");
 	std::cout << "swap: ";
-	letters.swap(swapity);
-	for (unsigned i=0; i<letters.size(); i++)
-		std::cout << ' ' << letters.at(i);
+	vec.swap(swapity);
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
 	std::cout << "clear: ";
-	letters.clear();
-	for (unsigned i=0; i<letters.size(); i++)
-		std::cout << ' ' << letters.at(i);
+	vec.clear();
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
-	alloc = letters.get_allocator();
+	alloc = vec.get_allocator();
 }
 
 int	main(void)
@@ -166,9 +238,9 @@ int	main(void)
 	ft::vector <int> my_num_vec(5, 7);
 	std::vector <std::string> lol(5, "uwu");
 
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < my_num_vec.size(); i++)
 	{
-		std::cout << my_num_vec[i] << std::endl;
+		std::cout << YELLOW << my_num_vec[i] << WHITE << std::endl;
 	}
 
 	iterator_tests();

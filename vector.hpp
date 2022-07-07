@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 11:59:32 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/06 20:26:22 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/07 17:48:03 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <memory> //alloc
 #include <iostream>
 #include <cmath>
+#define RED		"\033[38;5;196m"
+#define WHITE	"\033[0m"
 
 namespace ft
 {
@@ -48,8 +50,8 @@ namespace ft
 			typedef std::reverse_iterator<const_iterator>    		const_reverse_iterator;
 
 		private:
-			pointer										_begin;
-			pointer										_end;
+			// pointer										_begin;
+			// pointer										_end;
 			value_type									_val;
 
 			void	capacity_updater()
@@ -68,12 +70,6 @@ namespace ft
 
 				for (size_type i = 0; i < size_new_array; i++)
 					temp[i] = array[i];
-				// if (size_new_array > _old_cap)
-				// {
-				// 	for (size_type i = _old_cap; i < size_new_array; i++)
-				// 		temp[i] = (value_type) 0;
-				// 		std::cout << "djjdkdj" << std::endl;
-				// }
 				return temp;
 			}
 
@@ -101,7 +97,6 @@ namespace ft
 
 				for (size_type i = start; i < _size; i++)
 					_array[i] = _val;
-					std::cout << "owo!" << std::endl;
 			}
 
 			void	array_deleter()
@@ -127,42 +122,36 @@ namespace ft
 			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), \
 				_capacity(0), _old_cap(0), _alloc_type(alloc)
 			{
-				std::cout << "constructor uwu!" << std::endl;
+				std::cout << RED << "constructor uwu!" << WHITE << std::endl;
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(0), \
 				_old_cap(0), _alloc_type(alloc) //change data to null
 			{
-					// pushback asign
 					_val = val;
-					std::cout << "constructor owo!" << std::endl;
+					std::cout << RED << "constructor owo!" << WHITE << std::endl;
 
 					capacity_updater();
 					if (_array == NULL)
 						new_array();
-					// else
-					// 	array_updater();
 					array_filler(0);
-					// for (size_type i = 0; i < _capacity; i++)
-					// {
-					// 	std::cout << "arr = " << _array[i] << std::endl;
-					// }
 					_old_size = _size;
-
 			}
 
 			// template <class InputIterator>
 			// 	vector (InputIterator first, InputIterator last,
-			// 		const allocator_type& alloc = allocator_type());
-			// // {
-
-			// // }
+			// 	const allocator_type& alloc = allocator_type());
 
 			vector(const vector  & copy) { *this = copy; }
 			vector & operator = (vector const & copy)
 			{
-				this->_length = copy._length;
+				this->_size = copy._size;
+				this->_old_size = copy._old_size;;
+				this->_capacity = copy._capacity;
+				this->_old_cap = copy._old_cap;
+				this->_alloc_type = copy._alloc_type;
+				this->_array = copy._array;
 				return *this;
 			}
 
@@ -191,12 +180,35 @@ namespace ft
 				_old_size = _size;
 				_size++;
 				_val = val;
-				std::cout << val << std::endl;
+				std::cout << RED << val << WHITE << std::endl;
 				capacity_updater();
 				array_updater();
-				_array[_size-1] = val;
-				// array_filler(0);
+				_array[_size - 1] = val;
 			}
+
+			size_type size() const
+			{
+				return _size;
+			}
+
+			size_type max_size() const
+			{
+				return (std::numeric_limits<size_type>::max()/sizeof(T));
+			}
+
+			size_type capacity() const
+			{
+				return _capacity;
+			}
+
+			bool empty() const
+			{
+				if (_size == 0)
+					return true;
+				else
+					return false;
+			}
+
 
 			// static_assert<is_same<typename allocator_type::value_type,value_type>::value>();
 			//begin();
