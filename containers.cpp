@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:31 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/07 17:54:48 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/11 20:50:44 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,191 @@ void	iterator_tests()
 	std::vector<int> copy_of_it_tru (it_tru);
 }
 
+//test on negative and over max aswell, size wise!!
+
 void	capacity_tests()
 {
-	std::cout << "\nCAPACITY TESTS:\n\n";
+	std::cout << ORANGE << "\nMORE CAPACITY TESTS:\n\n" << WHITE;
 	std::vector<int> empty_vec;
 	std::vector<int> vec_with_value (4, 100);
+	ft::vector<int> my_empty_vec;
+	ft::vector<int> my_vec_with_value (4, 100);
+
 	std::cout << "Capacity:\n";
 	std::cout << "size empty: " << empty_vec.size() << '\n';
 	std::cout << "size: " << vec_with_value.size() << '\n';
 	std::cout << "max size: " << empty_vec.max_size() << '\n';
-	vec_with_value.resize(2);
-	std::cout << "resize: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
-	vec_with_value.resize(6);
-	std::cout << "resize: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
+
+	std::cout << YELLOW << "my size empty: " << my_empty_vec.size() << '\n';
+	std::cout << "my size: " << my_vec_with_value.size() << '\n';
+	std::cout << "my max size: " << my_empty_vec.max_size() << WHITE << '\n';
+
+	for (unsigned i=0; i < vec_with_value.size(); i++)
+		std::cout << vec_with_value[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value.size(); i++)
+		std::cout << my_vec_with_value[i] << std::endl;
+	std::cout << WHITE;
+
+	std::cout << ORANGE << "\nRESERVE TESTS:\n\n" << WHITE;
+
+	vec_with_value.reserve(70);
+	my_vec_with_value.reserve(70);
+
+	std::cout << "smaller reserve:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my smaller reserve:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << WHITE << '\n';
+
+	vec_with_value.reserve(1000);
+	my_vec_with_value.reserve(1000);
+
+	std::cout << "bigger reserve size:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my bigger reserve size:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << WHITE << '\n';
+
+	vec_with_value.reserve(0);
+	my_vec_with_value.reserve(0);
+
+	std::cout << "smaller reserve:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my smaller reserve:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << WHITE << '\n';
+
 	vec_with_value.resize(10);
-	std::cout << "resize: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
+	my_vec_with_value.resize(10);
+
+	std::cout << "smaller reserve:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my smaller reserve:	" << vec_with_value.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value.capacity() << WHITE << '\n';
+
+	for (unsigned i=0; i < vec_with_value.size(); i++)
+		std::cout << vec_with_value[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value.size(); i++)
+		std::cout << my_vec_with_value[i] << std::endl;
+	std::cout << WHITE;
+
+	std::cout << ORANGE << "\nRESIZE TESTS:\n\n" << WHITE;
+	vec_with_value.resize(2);
+	my_vec_with_value.resize(2);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	for (unsigned i=0; i < vec_with_value.size(); i++)
+		std::cout << vec_with_value[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value.size(); i++)
+		std::cout << my_vec_with_value[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_with_value.resize(6);
+	my_vec_with_value.resize(6);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(10);
+	my_vec_with_value.resize(10);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	for (unsigned i=0; i < vec_with_value.size(); i++)
+		std::cout << vec_with_value[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value.size(); i++)
+		std::cout << my_vec_with_value[i] << std::endl;
+	std::cout << WHITE;
+
 	vec_with_value.resize(20);
-	std::cout << "resize: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
+	my_vec_with_value.resize(20);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
 	vec_with_value.resize(33);
-	std::cout << "resize: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
-	std::cout << "empty: "<< empty_vec.empty()  << '\n';
-	std::cout << "not empty: " << vec_with_value.empty()  << '\n';
-	vec_with_value.reserve(30);
-	std::cout << "smaller reserve: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
-	vec_with_value.reserve(65);
-	std::cout << "bigger reserve: " << vec_with_value.size() << '\n';
-	std::cout << "capacity: " << vec_with_value.capacity() << '\n';
+	my_vec_with_value.resize(33);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(16);
+	my_vec_with_value.resize(16);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(16);
+	my_vec_with_value.resize(16);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(17);
+	my_vec_with_value.resize(17);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(15);
+	my_vec_with_value.resize(15);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(14);
+	my_vec_with_value.resize(14);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(1);
+	my_vec_with_value.resize(1);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(0);
+	my_vec_with_value.resize(0);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	vec_with_value.resize(64);
+	my_vec_with_value.resize(64);
+
+	std::cout << "resize:		" << vec_with_value.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
 }
 
 void	element_access_tests()
@@ -93,7 +246,7 @@ void	element_access_tests()
 	std::cout << "element access front back: " << vect.front() << " " << vect.back() << "\n";
 }
 
-void	modifiers_tests()
+void	tests()
 {
 	std::vector<int> vec_int;
 	ft::vector<int> my_vec_int;
@@ -152,25 +305,128 @@ void	modifiers_tests()
 		std::cout << "yes!" << std::endl;
 	else
 		std::cout << "no!" << std::endl;
-	std::cout << "is my_vec empty?	";
+	std::cout << YELLOW << "is my_vec empty?	";
 	if (my_vec.empty() == true)
-		std::cout << "yes!" << std::endl;
+		std::cout << "yes!" << WHITE << std::endl;
 	else
-		std::cout << "no!" << std::endl;
+		std::cout << "no!" << WHITE << std::endl;
 
 
 	/*** ASSIGN TESTS ***/
+	std::cout << ORANGE << "\nASSIGN TESTS:\n\n" << WHITE;
 	vec_int.assign(3, 8);
-	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
-	std::cout << "content of assigned: " << vec_int[0] << " " << vec_int[1] << " " << vec_int[2] << " " << "\n";
+	my_vec_int.assign(3, 8);
 
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "capacity: " << vec_int.capacity() << '\n';
+	std::cout << "size: " << vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < vec_int.size(); i++)
+		std::cout << vec_int[i] << std::endl;
+
+	std::cout << YELLOW << "\nmy size assigned: " << my_vec_int.size() <<'\n';
+	std::cout << "capacity: " << my_vec_int.capacity() << '\n';
+	std::cout << "size: " << my_vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < my_vec_int.size(); i++)
+		std::cout << my_vec_int[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_int.assign(1, 3);
+	my_vec_int.assign(1, 3);
+
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "capacity: " << vec_int.capacity() << '\n';
+	std::cout << "size: " << vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < vec_int.size(); i++)
+		std::cout << vec_int[i] << std::endl;
+
+	std::cout << YELLOW << "\nmy size assigned: " << my_vec_int.size() <<'\n';
+	std::cout << "capacity: " << my_vec_int.capacity() << '\n';
+	std::cout << "size: " << my_vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < my_vec_int.size(); i++)
+		std::cout << my_vec_int[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_int.assign(15, 3);
+	my_vec_int.assign(15, 3);
+
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "capacity: " << vec_int.capacity() << '\n';
+	std::cout << "size: " << vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < vec_int.size(); i++)
+		std::cout << vec_int[i] << std::endl;
+
+	std::cout << YELLOW << "\nmy size assigned: " << my_vec_int.size() <<'\n';
+	std::cout << "capacity: " << my_vec_int.capacity() << '\n';
+	std::cout << "size: " << my_vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < my_vec_int.size(); i++)
+		std::cout << my_vec_int[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_int.assign(15, 2);
+	my_vec_int.assign(15, 2);
+
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "capacity: " << vec_int.capacity() << '\n';
+	std::cout << "size: " << vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < vec_int.size(); i++)
+		std::cout << vec_int[i] << std::endl;
+
+	std::cout << YELLOW << "\nmy size assigned: " << my_vec_int.size() <<'\n';
+	std::cout << "capacity: " << my_vec_int.capacity() << '\n';
+	std::cout << "size: " << my_vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < my_vec_int.size(); i++)
+		std::cout << my_vec_int[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_int.assign(11, 11);
+	my_vec_int.assign(11, 11);
+
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "capacity: " << vec_int.capacity() << '\n';
+	std::cout << "size: " << vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < vec_int.size(); i++)
+		std::cout << vec_int[i] << std::endl;
+
+	std::cout << YELLOW << "\nmy size assigned: " << my_vec_int.size() <<'\n';
+	std::cout << "capacity: " << my_vec_int.capacity() << '\n';
+	std::cout << "size: " << my_vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < my_vec_int.size(); i++)
+		std::cout << my_vec_int[i] << std::endl;
+
+	vec_int.assign(4, 1);
+	my_vec_int.assign(4, 1);
+
+	std::cout << "\nsize assigned: " << vec_int.size() << '\n';
+	std::cout << "capacity: " << vec_int.capacity() << '\n';
+	std::cout << "size: " << vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < vec_int.size(); i++)
+		std::cout << vec_int[i] << std::endl;
+
+	std::cout << YELLOW << "\nmy size assigned: " << my_vec_int.size() <<'\n';
+	std::cout << "capacity: " << my_vec_int.capacity() << '\n';
+	std::cout << "size: " << my_vec_int.size() << '\n';
+	std::cout << "content of assigned:" << "\n";
+	for (unsigned i=0; i < my_vec_int.size(); i++)
+		std::cout << my_vec_int[i] << std::endl;
+	std::cout << WHITE;
 
 	/*** SIZE TESTS ***/
 	std::cout << ORANGE << "\nSIZE TESTS:" << WHITE << std::endl;
 	std::cout << "size:		" << vec.size() << '\n';
 	std::cout << YELLOW << "my size:	" << my_vec.size() << WHITE << '\n';
 	std::cout << "size:		" << vec_int.size() << '\n';
-	std::cout << YELLOW << "my size empty:	" << my_vec_int.size() << WHITE << '\n';
+	std::cout << YELLOW << "my size:	" << my_vec_int.size() << WHITE << '\n'; //is empty cuz no assign
 	std::cout << "max_size int:		" << vec_int.max_size() << '\n';
 	std::cout << YELLOW << "my max_size int:	" << my_vec_int.max_size() << WHITE << '\n';
 	std::cout << "max_size str:		" << vec.max_size() << '\n';
@@ -184,6 +440,7 @@ void	modifiers_tests()
 	std::cout << YELLOW << "my cap:		" << my_vec.capacity() << WHITE << '\n';
 	std::cout << "cap float:	" << vec_float.capacity() << '\n';
 	std::cout << YELLOW << "my cap float:	" << my_vec_float.capacity() << WHITE << '\n';
+
 	vec.push_back("abc"); //change this to resize later
 	vec.push_back("xyz");
 	vec.push_back("azula");
@@ -226,6 +483,8 @@ void	modifiers_tests()
 		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
+	capacity_tests();
+
 	alloc = vec.get_allocator();
 }
 
@@ -244,9 +503,8 @@ int	main(void)
 	}
 
 	iterator_tests();
-	capacity_tests();
 	element_access_tests();
-	modifiers_tests();
+	tests();
 
 	int myints[] = {16,2,77,29};
 	std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
@@ -258,4 +516,5 @@ int	main(void)
 	{
 		std::cout << *it << std::endl;
 	}
+	// while (1);
 }

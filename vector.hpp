@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/26 11:59:32 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/07 17:48:03 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/11 20:54:23 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 #include <memory> //alloc
 #include <iostream>
 #include <cmath>
+#include <iostream>       // std::cerr
+#include <typeinfo>       // operator typeid
+#include <exception>      // std::exception
 #define RED		"\033[38;5;196m"
 #define WHITE	"\033[0m"
+#define TEST "\033[38;5;196m TEST!!! \033[0m"
 
 namespace ft
 {
+
 	template < class T, class Allocator = std::allocator <T> >
 	class vector
 	{
@@ -35,6 +40,7 @@ namespace ft
 			size_type	_old_cap;
 			Allocator 	_alloc_type;
 			T			*_array;
+			bool		_flag_allocated;
 
 
 		protected:
@@ -54,9 +60,9 @@ namespace ft
 			// pointer										_end;
 			value_type									_val;
 
-			void	capacity_updater()
+			void	value_of_capacity_changer()
 			{
-				if (_size > _capacity)
+				if (_size != _capacity)
 				{
 					_old_cap = _capacity;
 					for (size_type i = 0; _capacity < _size; i++)
@@ -64,37 +70,40 @@ namespace ft
 				}
 			}
 
-			T	*copy_array(T *array, size_type size_new_array)
+			T	*copy_array(T *array, size_type size_new_array, size_type start)
 			{
 				T *temp = new T[size_new_array];
 
-				for (size_type i = 0; i < size_new_array; i++)
+				_flag_allocated = true;
+				for (size_type i = start; i < size_new_array; i++)
 					temp[i] = array[i];
 				return temp;
 			}
 
 			void	new_array()
 			{
-				_array = new T[_size];
+				_array = new T[_capacity];
+				_flag_allocated = true;
 			}
 
-			void	array_updater()
+			void	array_capacity_updater()
 			{
 					T *temp = NULL;
-					if (_old_size != 0)
+					if (_flag_allocated == false)
 					{
-						temp = copy_array(_array, _size);
+						std::cout << TEST << std::endl;
+						new_array();
+					}
+					else
+					{
+						temp = copy_array(_array, _size, 0);
 						delete [] _array;
 						_array = temp;
 					}
-					else
-						new_array();
-
 			}
 
 			void	array_filler(size_type start)
 			{
-
 				for (size_type i = start; i < _size; i++)
 					_array[i] = _val;
 			}
@@ -119,22 +128,30 @@ namespace ft
 			// }
 
 			/*---------------------------------------------------------------*/
+
+			size_type max_size() const
+			{
+				return (std::numeric_limits<size_type>::max()/sizeof(T));
+			}
+
 			explicit vector (const allocator_type& alloc = allocator_type()) : _size(0), \
-				_capacity(0), _old_cap(0), _alloc_type(alloc)
+				_capacity(0), _old_cap(0), _alloc_type(alloc), _flag_allocated(false)
 			{
 				std::cout << RED << "constructor uwu!" << WHITE << std::endl;
 			}
 
 			explicit vector (size_type n, const value_type& val = value_type(),
 				const allocator_type& alloc = allocator_type()) : _size(n), _capacity(0), \
-				_old_cap(0), _alloc_type(alloc) //change data to null
+				_old_cap(0), _alloc_type(alloc), _flag_allocated(false)
 			{
 					_val = val;
+					if (_size < 0 || _size > max_size())
+						throw (std::length_error("ft::vector"));
 					std::cout << RED << "constructor owo!" << WHITE << std::endl;
 
-					capacity_updater();
-					if (_array == NULL)
-						new_array();
+					value_of_capacity_changer();
+					std::cout << TEST << std::endl;
+					new_array();
 					array_filler(0);
 					_old_size = _size;
 			}
@@ -152,18 +169,16 @@ namespace ft
 				this->_old_cap = copy._old_cap;
 				this->_alloc_type = copy._alloc_type;
 				this->_array = copy._array;
+				this->_flag_allocated = copy._flag_allocated;
+				this->_val = copy._val;
 				return *this;
 			}
 
 			virtual ~vector()
 			{
+				if (_flag_allocated == true)
+					array_deleter();
 			};
-
-
-			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last);
-
-			void assign (size_type n, const value_type& val);
 
 			reference operator[] (size_type n)
 			{
@@ -181,19 +196,14 @@ namespace ft
 				_size++;
 				_val = val;
 				std::cout << RED << val << WHITE << std::endl;
-				capacity_updater();
-				array_updater();
+				value_of_capacity_changer();
+				array_capacity_updater();
 				_array[_size - 1] = val;
 			}
 
 			size_type size() const
 			{
 				return _size;
-			}
-
-			size_type max_size() const
-			{
-				return (std::numeric_limits<size_type>::max()/sizeof(T));
 			}
 
 			size_type capacity() const
@@ -208,6 +218,50 @@ namespace ft
 				else
 					return false;
 			}
+
+			void resize (size_type n, value_type val = value_type())
+			{
+				if (n < 0 || n > max_size())
+						throw (std::length_error("ft::vector"));
+				// _old_cap = _capacity;
+				_size = n;
+				_val = val;
+				value_of_capacity_changer();
+				array_capacity_updater();
+				array_filler(_old_size);
+			}
+
+			void reserve (size_type n)
+			{
+				if (_capacity < n)
+				{
+					_capacity = n;
+					value_of_capacity_changer();
+					array_capacity_updater();
+				}
+			}
+
+			// template <class InputIterator>
+			// void assign (InputIterator first, InputIterator last);
+
+			void assign (size_type n, const value_type& val)
+			{
+				_val = val;
+				if (_capacity < n)
+				{
+					_capacity = n;
+					_size = n;
+					array_capacity_updater();
+				}
+				else
+				{
+					delete [] _array;
+					_size = n;
+					new_array();
+				}
+				array_filler(0);
+			}
+
 
 
 			// static_assert<is_same<typename allocator_type::value_type,value_type>::value>();
