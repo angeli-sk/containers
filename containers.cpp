@@ -6,7 +6,7 @@
 /*   By: akramp <akramp@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 15:48:31 by akramp        #+#    #+#                 */
-/*   Updated: 2022/07/11 20:50:44 by akramp        ########   odam.nl         */
+/*   Updated: 2022/07/12 18:05:16 by akramp        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,48 @@
 #define WHITE	"\033[0m"
 #define RED		"\033[38;5;196m"
 
+void	alloc_test()
+{
+	std::cout << ORANGE << "\nALLOC TESTS:\n" << WHITE;
+	std::vector<int> vector;
+	int * p;
+	unsigned int i;
+
+  	// allocate an array with space for 5 elements using vector's allocator:
+	p = vector.get_allocator().allocate(5);
+
+	// construct values in-place on the array:
+	for (i=0; i<5; i++) vector.get_allocator().construct(&p[i],i);
+
+	std::cout << "The allocated array contains:";
+	for (i=0; i<5; i++) std::cout << ' ' << p[i];
+	std::cout << '\n';
+
+  // destroy and deallocate:
+	for (i=0; i<5; i++) vector.get_allocator().destroy(&p[i]);
+		vector.get_allocator().deallocate(p,5);
+
+	ft::vector<int> myvector;
+	int * pp;
+
+  	// allocate an array with space for 5 elements using vector's allocator:
+	pp = myvector.get_allocator().allocate(5);
+
+	// construct values in-place on the array:
+	for (i=0; i<5; i++) myvector.get_allocator().construct(&pp[i],i);
+
+	std::cout << YELLOW << "The allocated array contains:";
+	for (i=0; i<5; i++) std::cout << ' ' << pp[i];
+	std::cout << WHITE << "\n\n";
+
+  // destroy and deallocate:
+	for (i=0; i<5; i++) myvector.get_allocator().destroy(&pp[i]);
+		myvector.get_allocator().deallocate(pp,5);
+}
+
 void	init_it_tests()
 {
+	std::cout << ORANGE << "INIT_TESTS:\n" << WHITE;
 	int arr[] = { 10, 20, 30 };
 	int n = sizeof(arr) / sizeof(arr[0]);
 	std::vector<int> vect(arr, arr + n);
@@ -30,8 +70,7 @@ void	init_it_tests()
 
 void	iterator_tests()
 {
-	std::cout << "\nITERATORS TESTS:\n\n";
-	std::cout << "Iterators:\n";
+	std::cout << ORANGE << "\nITERATORS TESTS:\n\n";
 	init_it_tests();
 	std::vector<int> ints_with_value (4, 100);
 	for (std::vector<int>::iterator i = ints_with_value.begin(); i != ints_with_value.end(); ++i)
@@ -49,6 +88,8 @@ void	capacity_tests()
 	std::cout << ORANGE << "\nMORE CAPACITY TESTS:\n\n" << WHITE;
 	std::vector<int> empty_vec;
 	std::vector<int> vec_with_value (4, 100);
+	std::vector<std::string> vec_with_value_str (4, "lol");
+	ft::vector<std::string> my_vec_with_value_str (4, "lol");
 	ft::vector<int> my_empty_vec;
 	ft::vector<int> my_vec_with_value (4, 100);
 
@@ -109,7 +150,62 @@ void	capacity_tests()
 		std::cout << my_vec_with_value[i] << std::endl;
 	std::cout << WHITE;
 
+	vec_with_value_str.reserve(0);
+	my_vec_with_value_str.reserve(0);
+
+	std::cout << "smaller reserve:	" << vec_with_value_str.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value_str.capacity() << '\n';
+	std::cout << YELLOW << "my smaller reserve:	" << vec_with_value_str.size() << '\n';
+	std::cout << "capacity:		" << vec_with_value_str.capacity() << WHITE << '\n';
+
+
 	std::cout << ORANGE << "\nRESIZE TESTS:\n\n" << WHITE;
+
+	vec_with_value_str.resize(2);
+	my_vec_with_value_str.resize(2);
+
+	std::cout << "resize:		" << vec_with_value_str.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value_str.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value_str.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value_str.capacity() << WHITE <<'\n';
+
+	for (unsigned i=0; i < vec_with_value_str.size(); i++)
+		std::cout << vec_with_value_str[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value_str.size(); i++)
+		std::cout << my_vec_with_value_str[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_with_value_str.resize(5);
+	my_vec_with_value_str.resize(5);
+
+	std::cout << "resize:		" << vec_with_value_str.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value_str.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value_str.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value_str.capacity() << WHITE <<'\n';
+
+	for (unsigned i=0; i < vec_with_value_str.size(); i++)
+		std::cout << vec_with_value_str[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value_str.size(); i++)
+		std::cout << my_vec_with_value_str[i] << std::endl;
+	std::cout << WHITE;
+
+	vec_with_value_str.resize(3);
+	my_vec_with_value_str.resize(3);
+
+	std::cout << "resize:		" << vec_with_value_str.size() << '\n';
+	std::cout << "capacity:	" << vec_with_value_str.capacity() << '\n';
+	std::cout << YELLOW << "my resize:	" << my_vec_with_value_str.size() << '\n';
+	std::cout << "my capacity:	" << my_vec_with_value_str.capacity() << WHITE <<'\n';
+
+	for (unsigned i=0; i < vec_with_value_str.size(); i++)
+		std::cout << vec_with_value_str[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value_str.size(); i++)
+		std::cout << my_vec_with_value_str[i] << std::endl;
+	std::cout << WHITE;
+
 	vec_with_value.resize(2);
 	my_vec_with_value.resize(2);
 
@@ -132,6 +228,13 @@ void	capacity_tests()
 	std::cout << "capacity:	" << vec_with_value.capacity() << '\n';
 	std::cout << YELLOW << "my resize:	" << my_vec_with_value.size() << '\n';
 	std::cout << "my capacity:	" << my_vec_with_value.capacity() << WHITE <<'\n';
+
+	for (unsigned i=0; i < vec_with_value.size(); i++)
+		std::cout << vec_with_value[i] << std::endl;
+	std::cout << YELLOW;
+	for (unsigned i=0; i < my_vec_with_value.size(); i++)
+		std::cout << my_vec_with_value[i] << std::endl;
+	std::cout << WHITE;
 
 	vec_with_value.resize(10);
 	my_vec_with_value.resize(10);
@@ -232,18 +335,29 @@ void	capacity_tests()
 void	element_access_tests()
 {
 	std::cout << "\nELEMENT ACCESS TESTS:\n\n";
-	int arr[] = { 10, 20, 30 };
-	int n = sizeof(arr) / sizeof(arr[0]);
-	std::vector<int> myvector (10);
-	for (unsigned i=0; i<myvector.size(); i++)
-		myvector.at(i)=i;
-	std::cout << "assigned values at:";
-	for (unsigned i=0; i<myvector.size(); i++)
-		std::cout << ' ' << myvector.at(i);
-	std::cout << '\n';
-	std::vector<int> vect(arr, arr + n);
-	std::cout << "element access: " << vect[0] << " " << vect[1] << " " << vect[2] << " " << "\n";
-	std::cout << "element access front back: " << vect.front() << " " << vect.back() << "\n";
+	// int arr[] = { 10, 20, 30 };
+	// int n = sizeof(arr) / sizeof(arr[0]);
+	std::vector<int> vector (10, 7);
+	ft::vector<int> my_vector (10, 7);
+	std::cout << "assigned values at:\n";
+
+	for (unsigned i=0; i<vector.size(); i++)
+		vector.at(i)=i;
+	for (unsigned i=0; i<vector.size(); i++)
+		std::cout << ' ' << vector.at(i);
+	std::cout << YELLOW << '\n';
+	for (unsigned i=0; i<my_vector.size(); i++)
+		my_vector.at(i)=i;
+	for (unsigned i=0; i<my_vector.size(); i++)
+		std::cout << ' ' << my_vector.at(i);
+	std::cout << WHITE << '\n';
+
+	// std::vector<int> vect(arr, arr + n);
+	// ft::vector<int> my_vect(arr, arr + n);
+	std::cout << "element access: " << vector[0] << " " << vector[1] << " " << vector[2] << " " << "\n";
+	std::cout << "element access front back: " << vector.front() << " " << vector.back() << "\n";
+	std::cout  << YELLOW << "element access: "<< my_vector[0] << " " << my_vector[1] << " " << my_vector[2] << " " << "\n";
+	std::cout << "element access front back: " << my_vector.front() << " " << my_vector.back() << WHITE << "\n";
 }
 
 void	tests()
@@ -450,11 +564,22 @@ void	tests()
 	std::cout << "cap:		" << vec.capacity() << '\n';
 	std::cout << YELLOW << "my cap:		" << my_vec.capacity() << WHITE << '\n';
 
-	std::cout << "pop back: ";
+	std::cout << ORANGE << "\nBEFORE POP_BACK:\n" << WHITE;
+	for (unsigned i=0; i<vec.size(); i++)
+		std::cout << ' ' << vec.at(i);
+	std::cout << '\n';
+	for (unsigned i=0; i<my_vec.size(); i++)
+		std::cout << YELLOW <<' ' << my_vec.at(i);
+	std::cout << WHITE << '\n';
+	std::cout << ORANGE << "AFTER POP_BACK:\n" << WHITE;
 	vec.pop_back();
 	for (unsigned i=0; i<vec.size(); i++)
 		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
+	my_vec.pop_back();
+	for (unsigned i=0; i<my_vec.size(); i++)
+		std::cout << YELLOW << ' ' << my_vec.at(i);
+	std::cout << WHITE << '\n';
 
 	std::cout << "insert: ";
 	it = vec.begin();
@@ -469,13 +594,28 @@ void	tests()
 		std::cout << ' ' << vec.at(i);
 	std::cout << '\n';
 
-	std::vector<std::string> swapity;
-	swapity.push_back("omg its swapped!!??\n");
-	std::cout << "swap: ";
-	vec.swap(swapity);
-	for (unsigned i=0; i<vec.size(); i++)
-		std::cout << ' ' << vec.at(i);
-	std::cout << '\n';
+	// std::cout << ORANGE << "SWAP TESTS:\n" << WHITE;
+	// std::vector<std::string> swapity;
+	// ft::vector<std::string> my_swapity;
+	// swapity.push_back("omg OG is swapped!!??");
+	// my_swapity.push_back("omg mine is swapped!!??");
+
+
+	// vec.swap(swapity);
+	// my_vec.swap(my_swapity);
+
+	// for (unsigned i=0; i<vec.size(); i++)
+	// 	std::cout << ' ' << vec.at(i);
+	// std::cout << '\n' << YELLOW;
+	// for (unsigned i=0; i<my_vec.size(); i++)
+	// 	std::cout << ' ' << my_vec.at(i);
+	// std::cout << '\n' << WHITE;
+	// for (unsigned i=0; i<swapity.size(); i++)
+	// 	std::cout << ' ' << swapity.at(i);
+	// std::cout << '\n' << YELLOW;
+	// for (unsigned i=0; i<my_swapity.size(); i++)
+	// 	std::cout << ' ' << my_swapity.at(i);
+	// std::cout << '\n' << WHITE;
 
 	std::cout << "clear: ";
 	vec.clear();
@@ -484,7 +624,6 @@ void	tests()
 	std::cout << '\n';
 
 	capacity_tests();
-
 	alloc = vec.get_allocator();
 }
 
@@ -504,6 +643,7 @@ int	main(void)
 
 	iterator_tests();
 	element_access_tests();
+	alloc_test();
 	tests();
 
 	int myints[] = {16,2,77,29};
